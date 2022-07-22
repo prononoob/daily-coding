@@ -6,6 +6,7 @@ class Scraper():
     def __init__(self):
         print('Script Initialized!')
     def searchtitle(self, imID):
+        
         properlink = 'https://www.imdb.com/title/' + imID +'/'
         headers = {"Accept-Language": "en-US,en;q=0.5"}
         r = requests.get(properlink, headers = headers)
