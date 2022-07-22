@@ -8,7 +8,6 @@ class Scraper():
 
     def __init__(self):
         print('Script Initialized!')
-        
          
     def searchtitle(self, imID):
         properlink = 'https://www.imdb.com/title/' + imID +'/'
@@ -23,4 +22,3 @@ class Scraper():
         longtxt = soup.script
         stars = str(longtxt).find('ratingValue')
         print(str(longtxt)[stars+13:stars+16])
-
