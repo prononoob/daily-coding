@@ -20,5 +20,8 @@ class Scraper():
         r = requests.get(properlink, headers = headers)
         soup = BeautifulSoup(r.content, 'html.parser')
         longtxt = soup.script
-        stars = str(longtxt).find('ratingValue')
-        print(str(longtxt)[stars+13:stars+16])
+        stars = str(longtxt).find('contentRating')
+        if str(longtxt)[stars-5] == '.':
+            print(str(longtxt)[stars-6:stars-3])
+        else:
+            print(str(longtxt)[stars-4])
