@@ -19,3 +19,11 @@ class Notes:
             self.items[item] = not self.items[item]
         else:
             print(f'Item {item} doesn\'t exist')
+    def show(self):
+        for item in self.items:
+            if self.items[item] == True:
+                y = '[X]'
+            else:
+                y = '[ ]'
+            x = y + item
+        print(x)
