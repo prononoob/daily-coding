@@ -26,4 +26,4 @@ class Notes:
             else:
                 y = '[ ]'
             x = y + item
-        print(x)
+            print(x)
