@@ -1,4 +1,4 @@
-import curses
+import os, time
 
 #Model
 
@@ -14,11 +14,11 @@ class Notes:
         else:
             print(f'Item {item} already exists')
     def remove(self, item):
-
         if item in self.items:
             self.items.pop(item)
         else:
             print(f'Item {item} doesn\'t exist')
+
     def changeState(self, item):
         if item in self.items:
             self.items[item] = not self.items[item]
@@ -39,15 +39,32 @@ class Notes:
 class viewNotes:
 
     def __init__(self):
-        stdscr = curses.initscr()
-        curses.noecho()
-        curses.cbreak()
-        stdscr.keypad(True)
-        print('View initialized')
+        os.system('clear')
+        print('View initialized!')
 
-    def closeView(self):
-        curses.nocbreak()
-        stdscr.keypad(False)
-        curses.echo()
-        curses.endwin()
+    def clItems(self):
+        os.system('clear')
+        f.show()
+
+#Controller
+
+class controllNotes:
+
+    def __init__(self):
+        global f, v
+        f, v = Notes(), viewNotes()
+        print('Controller initialized!')
+
+    def add(self, item):
+        f.add(item)
+        v.clItems()
+
+    def remove(self, item):
+        f.remove(item)
+        v.clItems()
+
+    def tick(self, item):
+        f.changeState(item)
+        v.clItems()
+
 
