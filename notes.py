@@ -1,4 +1,5 @@
-import os, time
+import os
+from time import sleep
 
 #Model
 
@@ -13,17 +14,20 @@ class Notes:
             self.items[item] = False
         else:
             print(f'Item {item} already exists')
+            sleep(1)
     def remove(self, item):
         if item in self.items:
             self.items.pop(item)
         else:
             print(f'Item {item} doesn\'t exist')
+            sleep(1)
 
     def changeState(self, item):
         if item in self.items:
             self.items[item] = not self.items[item]
         else:
             print(f'Item {item} doesn\'t exist')
+            sleep(1)
 
     def show(self):
         for item in self.items:
