@@ -22,9 +22,10 @@ class Scraper():
         properlink = 'https://www.imdb.com/title/' + imID +'/'
         r = requests.get(properlink, headers = headers)
         soup = BeautifulSoup(r.content, 'html.parser')
-        longtxt = soup.script
-        stars = str(longtxt).find('contentRating')
-        if str(longtxt)[stars-5] == '.':
-            print(str(longtxt)[stars-6:stars-3])
+        longtxt = str(soup).find('"@type":"AggregateRating"')
+        shorttxt = str(soup)[longtxt+70:longtxt+110]
+        stars = shorttxt.find('ratingValue')
+        if shorttxt[stars+14] == '.':
+            print(shorttxt[stars+13:stars+16])
         else:
-            print(str(longtxt)[stars-4])
+            print(shorttxt[stars+13])
