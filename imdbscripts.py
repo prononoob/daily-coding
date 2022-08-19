@@ -63,8 +63,4 @@ class Scraper():
         for i in movies:
             dicline = i + ' ' + str(movies[i]) + "\n"
             file.write(dicline)
-        #print(movies)
-
-
-f = Scraper()
-f.findall()
+ 
