@@ -7,15 +7,33 @@ from bs4 import BeautifulSoup
 class InPost:
 	def __init__(self):
 		self.lin1 = 'https://inpost.pl/sledzenie-przesylek?number='
-		print('Class initialized')
 
 	def genProperlink(self, inpID):
 		self.inpID = inpID
 		self.properlink = self.lin1 + str(self.inpID)
-		self.r = requests.get(self.properlink)
-		print(self.properlink)
-		soup = BeautifulSoup(self.r.content, 'html.parser')
-		print(soup.find_all(class_='paragraph--component -small -white mt-4'))
 
-f = InPost()
-f.genProperlink(2222)
+	def findData(self):
+		self.r = requests.get(self.properlink)
+		soup = BeautifulSoup(self.r.content, 'html.parser')
+		soup = str(soup)
+		self.pos1 = soup.find('paczkomacie]')
+		self.shorttxt = soup[self.pos1:self.pos1+800]
+		self.pos1 = self.shorttxt.find('title')+8
+		self.shorttxt = self.shorttxt[self.pos1:self.pos1+50]
+
+	def analState(self, data):
+		self.data = data.split('","')[0]
+
+def statusPaczki(inpID):
+	f = InPost()
+	f.genProperlink(inpID)
+	f.findData()
+	f.analState(f.shorttxt)
+	print('Status paczki: ', f.data)
+
+
+'''f = InPost()
+f.genProperlink(651208508232300114080726)
+f.analState(f.shorttxt)'''
+
+statusPaczki(651208508232300114080726)
