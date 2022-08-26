@@ -32,9 +32,5 @@ def statusPaczki(inpID):
 	print('Status paczki: ', f.data)
 
 
-'''f = InPost()
-f.genProperlink(651208508232300114080726)
-f.analState(f.shorttxt)'''
-
 # Wpisz numer paczki w nawiasie
 statusPaczki()
