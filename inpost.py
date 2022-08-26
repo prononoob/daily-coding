@@ -15,7 +15,7 @@ class InPost:
 		soup = BeautifulSoup(self.r.content, 'html.parser')
 		soup = str(soup)
 		self.pos1 = soup.find('paczkomacie]')
-		self.shorttxt = soup[self.pos1:self.pos1+800]
+		self.shorttxt = soup[self.pos1:self.pos1+80]
 		self.pos1 = self.shorttxt.find('title')+8
 		self.shorttxt = self.shorttxt[self.pos1:self.pos1+50]
 
@@ -31,4 +31,4 @@ def statusPaczki(inpID):
 
 
 # Wpisz numer paczki w nawiasie
-statusPaczki()
+statusPaczki(651208508232300114080726)
