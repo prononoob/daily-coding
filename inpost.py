@@ -36,4 +36,5 @@ def statusPaczki(inpID):
 f.genProperlink(651208508232300114080726)
 f.analState(f.shorttxt)'''
 
-statusPaczki(651208508232300114080726)
+# Wpisz numer paczki w nawiasie
+statusPaczki()
