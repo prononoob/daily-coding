@@ -31,4 +31,4 @@ def statusPaczki(inpID):
 
 
 # Wpisz numer paczki w nawiasie
-statusPaczki(651208508232300114080726)
+statusPaczki()
