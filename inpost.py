@@ -2,8 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-#InPost response demo
-
 class InPost:
 	def __init__(self):
 		self.lin1 = 'https://inpost.pl/sledzenie-przesylek?number='
