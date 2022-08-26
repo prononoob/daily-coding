@@ -8,7 +8,10 @@ class InPost:
 
 	def genProperlink(self, inpID):
 		self.inpID = inpID
-		self.properlink = self.lin1 + str(self.inpID)
+		if str(self.inpID).isdigit() == True and len(str(self.inpID)) == 24:
+			self.properlink = self.lin1 + str(self.inpID)
+		else:
+			exit('Numer przesylki jest niepoprawny')
 
 	def findData(self):
 		self.r = requests.get(self.properlink)
