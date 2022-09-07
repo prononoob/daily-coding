@@ -2,5 +2,6 @@
 1. [IMDB webscraping](imdbscripts.py)
 2. [Checklist program](notes.py)
 3. [InPost website wrapper](inpost.py)
+4. [Bouncing ball animation](bounceanimation.py)
 
 **More to come**
