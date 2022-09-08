@@ -1,6 +1,5 @@
 import numpy as np
 import cv2 as cv
-from time import sleep
 
 
 class MazeSolver:
@@ -14,74 +13,56 @@ class MazeSolver:
 
 
 	def pathing(self):
-
-		# DODAJ DIAGONALE
-
 		self.directions()
 		self.sensorcheck()
-		if self.sensors[0][0] == True or (any(self.sensors[0]) == False and
-			any(self.sensors[1]) == False and self.lastdir == 2):
+		if (self.sensors[0][0] == True and any(self.sensors[1]) == False or
+			(any(self.sensors[0]) == False and any(self.sensors[1]) == False and
+			self.lastdir == 2) or self.sensors[0][0] == True and self.sensors[1][0] == True):
 			while int(list(self.up)[2]) + int(list(self.left)[2]) == 255:
-				self.updatepath()
 				self.posX -= 1
+				self.updatepath()
 				self.sensorcheck()
-			self.updatepath()
-			self.posX -= 1
-			self.sensorcheck()
+			if any(self.sensors[0]) == False and any(self.sensors[1]) == False:
+				self.posX -= 1
+				self.updatepath()
+				self.sensorcheck()
 			self.lastdir = 4
-		elif self.sensors[0][1] == True or (any(self.sensors[0]) == False and
-			any(self.sensors[1]) == False and self.lastdir == 1):
+		elif (self.sensors[0][1] == True and any(self.sensors[1]) == False or
+			(any(self.sensors[0]) == False and any(self.sensors[1]) == False and
+			self.lastdir == 1) or self.sensors[0][1] == True and self.sensors[1][1] == True):
 			while int(list(self.down)[2]) + int(list(self.right)[2]) == 255:
-				self.updatepath()
 				self.posX += 1
-				self.sensorcheck()
-			self.updatepath()
-			self.posX += 1
-			self.sensorcheck()
-			self.lastdir = 3
-		elif self.sensors[1][0] == True or (any(self.sensors[0]) == False and
-			any(self.sensors[1]) == False and self.lastdir == 4):
-			while int(list(self.right)[2]) + int(list(self.up)[2]) == 255:
 				self.updatepath()
-				self.posY -= 1
 				self.sensorcheck()
-			self.updatepath()
-			self.posY -= 1
-			self.sensorcheck()
+			if any(self.sensors[0]) == False and any(self.sensors[1]) == False:
+				self.posX += 1
+				self.updatepath()
+				self.sensorcheck()
+			self.lastdir = 3
+		elif (self.sensors[1][0] == True and any(self.sensors[0]) == False or
+			(any(self.sensors[0]) == False and any(self.sensors[1]) == False and
+			self.lastdir == 4) or self.sensors[0][1] == True and self.sensors[1][0] == True):
+			while int(list(self.right)[2]) + int(list(self.up)[2]) == 255:
+				self.posY -= 1
+				self.updatepath()
+				self.sensorcheck()
+			if any(self.sensors[0]) == False and any(self.sensors[1]) == False:
+				self.posY -= 1
+				self.updatepath()
+				self.sensorcheck()
 			self.lastdir = 1
-		elif self.sensors[1][1] == True or (any(self.sensors[0]) == False and
-			any(self.sensors[1]) == False and self.lastdir == 3):
+		elif (self.sensors[1][1] == True and any(self.sensors[0]) == False or 
+			(any(self.sensors[0]) == False and any(self.sensors[1]) == False and
+			self.lastdir == 3) or self.sensors[0][0] == True and self.sensors[1][1] == True):
 			while int(list(self.left)[2]) + int(list(self.down)[2]) == 255:
 				self.updatepath()
 				self.posY += 1
 				self.sensorcheck()
-			self.updatepath()
-			self.posY += 1
-			self.sensorcheck()
+			if any(self.sensors[0]) == False and any(self.sensors[1]) == False:
+				self.posY += 1
+				self.updatepath()
+				self.sensorcheck()
 			self.lastdir = 2
-
-			#while self.sensors[0][0]
-			#while self.sensors[0][0] == True and self.sens
-
-		'''self.dire = dire
-								self.directions()
-								while self.dire[2] == 255:
-									print(self.posX, self.posY)
-									sleep(.1)
-									self.updatepath()
-									self.sensorcheck()
-									if self.dire == 'UP':
-										self.posY -= 1
-										print(1)
-									elif self.dire == 'DOWN':
-										self.posY += 1
-										print(2)
-									elif self.dire == 'RIGHT':
-										self.posX += 1
-									elif self.dire == 'LEFT':
-										self.posX -= 1
-									self.directions()'''
-
 
 	def directions(self):
 		self.up = list(self.img[self.posY-1, self.posX])
@@ -109,23 +90,12 @@ class MazeSolver:
 	def path(self):
 		self.directions()
 		while self.right[2] == 255:
-			print(self.posX, self.posY, self.right)
-			self.updatepath()
 			self.posX += 1
+			self.updatepath()
 			self.sensorcheck()
-		self.pathing()
-		for i in range(10):
+		self.sensorcheck()
+		while self.left != [0, 0, 255]:
 			self.pathing()
-		#while int(list(self.img[self.posY, self.posX+1])[2]) + int(list(self.img[self.posY-1, self.posX])[2]) != 0:
-			#print(int(list(self.img[self.posY, self.posX+1])[2]) + int(list(self.img[self.posY-1, self.posX])[2]))
-			#self.pathing(self.right)
-			#self.pathing('UP')
-		#while True:
-			#self.directions()
-			#if self.up[2] == 0 and self.right[2] == 0:
-				#self.pathingW()
-
-
 
 	def drawing(self):
 		for ind, val in enumerate(self.pathX):
