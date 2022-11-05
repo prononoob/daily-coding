@@ -17,14 +17,17 @@ class Board:
 		print('----------')
 		if self.amount:
 			for i in range(self.amount):
-				print(f'ID: {i} Title: {self.catalog[i]}')
+				if self.catalog[i]:
+					print(f'ID: {i} Title: {self.catalog[i]}')
 		else:
 			for i in self.catalog:
-				print(f'ID: {i} Title: {self.catalog[i]}')
-		# print('----------')
+				if self.catalog[i]:
+					print(f'ID: {i} Title: {self.catalog[i]}')
 
 	def delete(self, threadID):
-		pass
+		self.threadID = threadID
+		if self.threadID in self.catalog:
+			self.catalog[self.threadID] = False
 
 
 class Thread:
@@ -32,10 +35,11 @@ class Thread:
 		pass
 
 
-board = Board()
-board.create('Thread 1')
-board.create('Thread 2')
-board.create('Thread 3')
-board.show()
-board.show(4)
-board.show(2)
+if __name__ == '__main__':
+	board = Board()
+	board.create('Thread 1')
+	board.create('Thread 2')
+	board.create('Thread 3')
+	board.show()
+	board.delete(1)
+	board.show()
