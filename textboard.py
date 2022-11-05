@@ -47,8 +47,12 @@ class Thread:
 		print('----------')
 		print(self.board.catalog[threadID])
 		for i in self.replies:
-			if self.replies[i][0] == self.threadID:
+			if self.replies[i] and self.replies[i][0] == self.threadID:
 				print(f'    Reply {i}: {self.replies[i][1]}')
+
+	def deleteReply(self, replyID):
+		self.replyID = replyID
+		self.replies[self.replyID] = False
 
 
 if __name__ == '__main__':
@@ -60,4 +64,6 @@ if __name__ == '__main__':
 	thread = Thread(board=board)
 	thread.reply(0, 'Reply 1')
 	thread.reply(0, 'Reply 2')
+	thread.showReplies(0)
+	thread.deleteReply(0)
 	thread.showReplies(0)
