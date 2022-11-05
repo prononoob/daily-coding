@@ -31,16 +31,24 @@ class Board:
 
 
 class Thread:
-	def __init__(self):
-		pass
+	def __init__(self, board):
+		self.board = board
+		self.replies = {}
+		self.replyID = 0
 
-	def reply(self, threadID):
+	def reply(self, threadID, replyMsg):
 		self.threadID = threadID
-		pass
+		self.replyMsg = replyMsg
+		self.replies[self.replyID] = [self.threadID, self.replyMsg]
+		self.replyID += 1
 
 	def showReplies(self, threadID):
 		self.threadID = threadID
-		pass
+		print('----------')
+		print(self.board.catalog[threadID])
+		for i in self.replies:
+			if self.replies[i][0] == self.threadID:
+				print(f'    Reply {i}: {self.replies[i][1]}')
 
 
 if __name__ == '__main__':
@@ -49,5 +57,7 @@ if __name__ == '__main__':
 	board.create('Thread 2')
 	board.create('Thread 3')
 	board.show()
-	board.delete(1)
-	board.show()
+	thread = Thread(board=board)
+	thread.reply(0, 'Reply 1')
+	thread.reply(0, 'Reply 2')
+	thread.showReplies(0)
