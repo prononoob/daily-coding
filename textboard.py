@@ -34,6 +34,14 @@ class Thread:
 	def __init__(self):
 		pass
 
+	def reply(self, threadID):
+		self.threadID = threadID
+		pass
+
+	def showReplies(self, threadID):
+		self.threadID = threadID
+		pass
+
 
 if __name__ == '__main__':
 	board = Board()
