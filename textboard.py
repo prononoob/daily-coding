@@ -1,3 +1,7 @@
+from tkinter import *
+from tkinter import ttk
+
+
 class Board:
 	def __init__(self):
 		self.catalog = {}
@@ -55,15 +59,36 @@ class Thread:
 		self.replies[self.replyID] = False
 
 
+class Window:
+	def __init__(self):
+		self.threadOpen = False
+		self.root = Tk()
+		self.root.geometry('400x450')
+		self.frm = ttk.Frame(self.root, padding=10)
+		self.createThreadButton = Button(self.root, text='Create Thread', command=self.createThread)
+		self.createThreadButton.pack(ipadx=10, ipady=10, padx=10, side=LEFT, expand=True)
+		self.root.mainloop()
+
+	def createThread(self):
+		if not self.threadOpen:
+			self.threadContent = Text(self.root, height=5, width=20)
+			self.threadContent.pack(ipadx=10, ipady=10, padx=10, anchor=E, expand=True)
+			self.threadContent.insert('1.0', 'Content')
+			self.threadOpen = True
+		else:
+			self.threadContent.destroy()
+			self.threadOpen = False
+
 if __name__ == '__main__':
 	board = Board()
-	board.create('Thread 1')
+	'''board.create('Thread 1')
 	board.create('Thread 2')
 	board.create('Thread 3')
-	board.show()
+	board.show()'''
 	thread = Thread(board=board)
-	thread.reply(0, 'Reply 1')
+	'''thread.reply(0, 'Reply 1')
 	thread.reply(0, 'Reply 2')
 	thread.showReplies(0)
 	thread.deleteReply(0)
-	thread.showReplies(0)
+	thread.showReplies(0)'''
+	window = Window()
