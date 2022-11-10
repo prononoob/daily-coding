@@ -60,14 +60,19 @@ class Thread:
 
 
 class Window:
-	def __init__(self):
+	# Zdefiniuj sceny, bedzie prosciej
+	def __init__(self, board):
+		self.board = board
 		self.threadOpen = False
 		self.root = Tk()
 		self.root.geometry('400x450')
 		self.frm = ttk.Frame(self.root, padding=10)
+		self.mainMenu()
+		self.root.mainloop()
+
+	def mainMenu(self):
 		self.createThreadButton = Button(self.root, text='Create Thread', command=self.createThread)
 		self.createThreadButton.pack(ipadx=10, ipady=10, padx=10, side=LEFT, expand=True)
-		self.root.mainloop()
 
 	def createThread(self):
 		if not self.threadOpen:
@@ -75,9 +80,18 @@ class Window:
 			self.threadContent.pack(ipadx=10, ipady=10, padx=10, anchor=E, expand=True)
 			self.threadContent.insert('1.0', 'Content')
 			self.threadOpen = True
+			self.createButton = Button(self.root, text='Create', command=self.getText)
+			self.createButton.pack(ipadx=10, ipady=10, padx=10, anchor=E)
 		else:
 			self.threadContent.destroy()
+			self.createButton.destroy()
 			self.threadOpen = False
+
+	def getText(self):
+		self.content = self.threadContent.get('1.0', 'end').strip()
+		self.board.create(self.content)
+		print(self.content, self.board.catalog)
+
 
 if __name__ == '__main__':
 	board = Board()
@@ -91,4 +105,4 @@ if __name__ == '__main__':
 	thread.showReplies(0)
 	thread.deleteReply(0)
 	thread.showReplies(0)'''
-	window = Window()
+	window = Window(board=board)
