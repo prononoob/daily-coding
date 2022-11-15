@@ -62,26 +62,37 @@ class Thread:
 class Window:
 	# Zdefiniuj sceny, bedzie prosciej
 	def __init__(self, board):
+		self.scene = []
 		self.board = board
 		self.threadOpen = False
 		self.root = Tk()
-		self.root.geometry('400x450')
+		self.root.geometry('400x350')
 		self.frm = ttk.Frame(self.root, padding=10)
 		self.mainMenu()
 		self.root.mainloop()
 
 	def mainMenu(self):
-		self.createThreadButton = Button(self.root, text='Create Thread', command=self.createThread)
-		self.createThreadButton.pack(ipadx=10, ipady=10, padx=10, side=LEFT, expand=True)
+		self.createThreadButton = Button(self.root, text='Create Thread', command=self.createThread, width=15)
+		self.createThreadButton.pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
+		self.catalogButton = Button(self.root, text='Catalog', width=15)
+		self.catalogButton.pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
+		self.quitButton = Button(self.root, text='Quit', command=self.quitCommand)
+		self.quitButton.pack(ipadx=10, ipady=10, padx=10, pady=25, side=BOTTOM)
+
+	def clearScene(self):
+		pass
+
+	def quitCommand(self):
+		exit()
 
 	def createThread(self):
 		if not self.threadOpen:
 			self.threadContent = Text(self.root, height=5, width=20)
-			self.threadContent.pack(ipadx=10, ipady=10, padx=10, anchor=E, expand=True)
+			self.threadContent.pack(ipadx=10, ipady=10, padx=10, side=RIGHT)
 			self.threadContent.insert('1.0', 'Content')
 			self.threadOpen = True
 			self.createButton = Button(self.root, text='Create', command=self.getText)
-			self.createButton.pack(ipadx=10, ipady=10, padx=10, anchor=E)
+			self.createButton.pack(ipadx=10, ipady=10, padx=10, side=RIGHT)
 		else:
 			self.threadContent.destroy()
 			self.createButton.destroy()
