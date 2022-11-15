@@ -60,7 +60,6 @@ class Thread:
 
 
 class Window:
-	# Zdefiniuj sceny, bedzie prosciej
 	def __init__(self, board):
 		self.board = board
 		self.threadOpen = False
@@ -70,9 +69,10 @@ class Window:
 		self.mainMenu()
 		self.root.mainloop()
 
-	def createQuit(self):
+	def createQuit(self, side=BOTTOM):
+		self.side = side
 		self.quitButton = Button(self.root, text='Quit', command=self.quitCommand)
-		self.quitButton.pack(ipadx=10, ipady=10, padx=10, pady=25, side=BOTTOM)
+		self.quitButton.pack(ipadx=10, ipady=10, padx=10, pady=25, side=self.side, expand=True)
 
 	def mainMenu(self):
 		self.clearScene()
@@ -111,11 +111,19 @@ class Window:
 
 	def catalogScene(self):
 		self.clearScene()
+		self.limiter = 0
 		for i in self.board.catalog:
+			if self.limiter > 2:
+				Button(self.root, text=f'Page {int(self.limiter/3)}').pack(ipadx=10, ipady=10, padx=10, side=LEFT, expand=True)
+				break
 			Button(self.root, text=self.board.catalog[i], width=15).pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
-		self.createQuit()
+			self.limiter += 1
 		self.mainMenuButton = Button(text='Main menu', command=self.mainMenu)
-		self.mainMenuButton.pack(ipadx=10, ipady=10, padx=50, expand=True)
+		self.mainMenuButton.pack(ipadx=10, ipady=10, padx=10, expand=True, side=LEFT)
+		if self.limiter > 2:
+			self.createQuit(side=LEFT)
+		else:
+			self.createQuit()
 
 
 	def getText(self):
