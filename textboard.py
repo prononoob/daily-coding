@@ -62,7 +62,6 @@ class Thread:
 class Window:
 	# Zdefiniuj sceny, bedzie prosciej
 	def __init__(self, board):
-		self.scene = []
 		self.board = board
 		self.threadOpen = False
 		self.root = Tk()
@@ -71,16 +70,28 @@ class Window:
 		self.mainMenu()
 		self.root.mainloop()
 
-	def mainMenu(self):
-		self.createThreadButton = Button(self.root, text='Create Thread', command=self.createThread, width=15)
-		self.createThreadButton.pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
-		self.catalogButton = Button(self.root, text='Catalog', width=15)
-		self.catalogButton.pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
+	def createQuit(self):
 		self.quitButton = Button(self.root, text='Quit', command=self.quitCommand)
 		self.quitButton.pack(ipadx=10, ipady=10, padx=10, pady=25, side=BOTTOM)
 
+	def mainMenu(self):
+		self.clearScene()
+		self.createThreadButton = Button(self.root, text='Create Thread', command=self.createThread, width=15)
+		self.createThreadButton.pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
+		self.catalogButton = Button(self.root, text='Catalog', width=15, command=self.catalogScene)
+		self.catalogButton.pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
+		self.createQuit()
+
+	def allChildren (self):
+	    self.scene = self.root.winfo_children()
+
+	    for item in self.scene:
+	        if item.winfo_children() and 'button' in item:
+	            self.scene.extend(item.winfo_children())
+
 	def clearScene(self):
-		pass
+		self.allChildren()
+		[i.pack_forget() for i in self.scene]
 
 	def quitCommand(self):
 		exit()
@@ -97,6 +108,15 @@ class Window:
 			self.threadContent.destroy()
 			self.createButton.destroy()
 			self.threadOpen = False
+
+	def catalogScene(self):
+		self.clearScene()
+		for i in self.board.catalog:
+			Button(self.root, text=self.board.catalog[i], width=15).pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
+		self.createQuit()
+		self.mainMenuButton = Button(text='Main menu', command=self.mainMenu)
+		self.mainMenuButton.pack(ipadx=10, ipady=10, padx=50, expand=True)
+
 
 	def getText(self):
 		self.content = self.threadContent.get('1.0', 'end').strip()
