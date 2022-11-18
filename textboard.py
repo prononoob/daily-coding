@@ -109,18 +109,49 @@ class Window:
 			self.createButton.destroy()
 			self.threadOpen = False
 
-	def catalogScene(self):
+	def displayThreeThreads(self, guiThreadIndex):
+		self.guiThreadIndex = guiThreadIndex
+		if len(self.board.catalog) <= 3:
+			for i in self.board.catalog:
+				Button(self.root, text=self.board.catalog[i], width=15).pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
+		elif self.guiThreadIndex > len(self.board.catalog)-3:
+			self.guiThreadIndex = len(self.board.catalog)-3
+			for i in range(self.guiThreadIndex, self.guiThreadIndex+3):
+				Button(self.root, text=self.board.catalog[i], width=15).pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
+		else:
+			for i in range(self.guiThreadIndex, self.guiThreadIndex+3):
+				Button(self.root, text=self.board.catalog[i], width=15).pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
+
+	def nextScene(self):
+		self.catalogScene(False, self.guiThreadIndex+3)
+
+	def previousScene(self):
+		self.catalogScene(False, self.guiThreadIndex-3)
+
+	def catalogScene(self, firstLook=True, guiThreadIndex=0):
 		self.clearScene()
-		self.limiter = 0
-		for i in self.board.catalog:
-			if self.limiter > 2:
-				Button(self.root, text=f'Page {int(self.limiter/3)}').pack(ipadx=10, ipady=10, padx=10, side=LEFT, expand=True)
-				break
-			Button(self.root, text=self.board.catalog[i], width=15).pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
-			self.limiter += 1
+		self.firstLook = firstLook
+		self.guiThreadIndex = guiThreadIndex
+		if self.guiThreadIndex < 0:
+			self.guiThreadIndex = 0
+
+		if self.firstLook:
+			self.displayedPage = 1
+			self.firstLook = False
+			self.displayThreeThreads(0)
+			if len(self.board.catalog) > 3:
+				Button(self.root, text='Next', command=self.nextScene).pack(ipadx=10, ipady=10, padx=10, expand=True, side=LEFT)
+		else:
+			self.displayThreeThreads(self.guiThreadIndex)
+			if self.guiThreadIndex != 0:
+				Button(self.root, text='Previous', command=self.previousScene).pack(ipadx=10, ipady=10, padx=10, expand=True, side=LEFT)
+			if self.guiThreadIndex < len(self.board.catalog)-3:
+				Button(self.root, text='Next', command=self.nextScene).pack(ipadx=10, ipady=10, padx=10, expand=True, side=LEFT)
+
 		self.mainMenuButton = Button(text='Main menu', command=self.mainMenu)
 		self.mainMenuButton.pack(ipadx=10, ipady=10, padx=10, expand=True, side=LEFT)
-		if self.limiter > 2:
+		
+		if len(self.board.catalog) > 3:
 			self.createQuit(side=LEFT)
 		else:
 			self.createQuit()
