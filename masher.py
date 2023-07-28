@@ -64,8 +64,8 @@ class ImageAnalyser:
 
 def main():
     i = ImageAnalyser()
-    i.setInputPath('C:/Users/lolle/Desktop/miniprojects/image_masher/input/')
-    i.setOutputPath('C:/Users/lolle/Desktop/miniprojects/image_masher/output/')
+    #i.setInputPath('input/path')
+    #i.setOutputPath('output/path')
     i.mix()
 
 if __name__ == '__main__':
