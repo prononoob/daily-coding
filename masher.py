@@ -34,10 +34,11 @@ class ImageAnalyser:
                 self.maxWidth = len(file[0])
         
     def makeBlankImage(self):
-        self.result = full((self.maxHeigth, self.maxWidth, 3), 255, uint8)
+        self.result = full((self.maxHeigth-1, self.maxWidth-1, 3), 255, uint8)
 
     def mixPixels(self):
         for height in range(self.maxHeigth-1):
+            print('Progress:', round(height/(self.maxHeigth-1)*100, 1), '%')
             for width in range(self.maxWidth-1):
                 self.randomIMG = randint(0, self.numberOfImages-1)
                 if height < len(self.files[self.randomIMG]) and width < len(self.files[self.randomIMG][0]):
